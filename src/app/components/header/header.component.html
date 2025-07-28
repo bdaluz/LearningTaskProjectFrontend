@@ -1,0 +1,28 @@
+<nav>
+  <div class="nav-left">
+    <a class="brand" routerLink="/">
+      <img src="/assets/TasksIcon.png" alt="Tasks-icon" />
+      <h2>SimpTasks</h2>
+    </a>
+  </div>
+
+  <ul class="links">
+    <li *ngIf="!isLoggedIn">
+      <a routerLink="/login" routerLinkActive="active-link">Login</a>
+    </li>
+    <li *ngIf="isLoggedIn">
+      <a routerLink="/dashboard" routerLinkActive="active-link"
+        >Tasks Dashboard</a
+      >
+    </li>
+    <li *ngIf="usernameInitial" class="dropdown">
+      <div class="circle" (click)="toggleDropdown()">
+        <p class="circle-inner">{{ usernameInitial }}</p>
+      </div>
+      <div class="dropdown-content" [class.show]="isDropdownOpen">
+        <a routerLink="/profile" (click)="closeDropdown()">Profile</a>
+        <a (click)="logout()">Logout</a>
+      </div>
+    </li>
+  </ul>
+</nav>
