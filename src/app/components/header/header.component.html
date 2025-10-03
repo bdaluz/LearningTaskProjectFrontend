@@ -1,7 +1,7 @@
 <nav>
   <div class="nav-left">
     <a class="brand" routerLink="/">
-      <img src="/assets/TasksIcon.png" alt="Tasks-icon" />
+      <img [src]="logoSrc" alt="Tasks-icon" />
       <h2>SimpTasks</h2>
     </a>
   </div>
@@ -16,13 +16,44 @@
       >
     </li>
     <li *ngIf="usernameInitial" class="dropdown">
-      <div class="circle" (click)="toggleDropdown()">
+      <div
+        class="circle"
+        role="button"
+        tabindex="0"
+        aria-haspopup="true"
+        [attr.aria-expanded]="isDropdownOpen"
+        (click)="toggleDropdown()"
+        (keydown)="onAvatarKeydown($event)"
+      >
         <p class="circle-inner">{{ usernameInitial }}</p>
       </div>
-      <div class="dropdown-content" [class.show]="isDropdownOpen">
-        <a routerLink="/profile" (click)="closeDropdown()">Profile</a>
-        <a (click)="logout()">Logout</a>
+
+      <div
+        class="dropdown-content"
+        [class.show]="isDropdownOpen"
+        role="menu"
+        aria-label="User menu"
+      >
+        <a
+          routerLink="/profile"
+          (click)="closeDropdown()"
+          role="menuitem"
+          tabindex="0"
+          >Profile</a
+        >
+        <a (click)="logout()" role="menuitem" tabindex="0">Logout</a>
       </div>
+    </li>
+    <li class="theme-toggle">
+      <button
+        class="theme-btn"
+        (click)="toggleTheme()"
+        [attr.aria-pressed]="currentTheme === 'dark'"
+        aria-label="Toggle color theme"
+      >
+        <span *ngIf="currentTheme === 'dark'">☀️</span>
+        <span *ngIf="currentTheme !== 'dark'">🌙</span>
+      </button>
     </li>
   </ul>
 </nav>
