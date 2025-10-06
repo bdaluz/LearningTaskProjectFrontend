@@ -16,6 +16,10 @@ export class HeaderComponent implements OnDestroy {
   isDropdownOpen: boolean = false;
   isLoggedIn: boolean = false;
 
+  currentTheme: Theme = 'light';
+  private themeSub?: Subscription;
+  logoSrc: string = '/assets/TasksIcon.png';
+
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -45,19 +49,17 @@ export class HeaderComponent implements OnDestroy {
     });
   }
 
-  currentTheme: Theme = 'light';
-  private themeSub?: Subscription;
-
-  logoSrc: string = '/assets/TasksIcon.png';
-
   toggleTheme(): void {
     this.themeService.toggleTheme();
   }
 
   logout(): void {
-    this.authService.logout();
-    this.closeDropdown();
-    this.router.navigate(['/login']);
+    this.authService.logout().subscribe({
+      complete: () => {
+        this.closeDropdown();
+        this.router.navigate(['/login']);
+      },
+    });
   }
 
   toggleDropdown(): void {

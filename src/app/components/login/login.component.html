@@ -1,1 +1,42 @@
-<p>login works!</p>
+<div class="form-container">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form-card">
+    <h2 class="form-title">Welcome back!</h2>
+
+    <div class="input-group">
+      <label for="username">Username</label>
+      <input
+        type="text"
+        id="username"
+        formControlName="username"
+        required
+        aria-label="Username"
+        (input)="errorMessage = ''"
+        autocomplete="username"
+      />
+    </div>
+
+    <div class="input-group">
+      <label for="password">Password</label>
+      <input
+        type="password"
+        id="password"
+        formControlName="password"
+        required
+        aria-label="Password"
+        (input)="errorMessage = ''"
+        autocomplete="current-password"
+      />
+    </div>
+
+    <button type="submit" class="primary-button">Login</button>
+
+    <div class="form-links">
+      <a routerLink="/forgot-password" class="form-link">Forgot Password?</a>
+      <a routerLink="/signup" class="form-link">Sign Up</a>
+    </div>
+
+    <div class="error-wrapper" aria-live="polite">
+      <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+    </div>
+  </form>
+</div>

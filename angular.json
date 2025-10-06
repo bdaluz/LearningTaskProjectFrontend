@@ -16,17 +16,10 @@
             "outputPath": "dist/learning-task-project-frontend",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.css"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/styles.css"],
             "scripts": []
           },
           "configurations": {
@@ -69,7 +62,10 @@
               "browserTarget": "LearningTaskProjectFrontend:build:production"
             },
             "development": {
-              "browserTarget": "LearningTaskProjectFrontend:build:development"
+              "browserTarget": "LearningTaskProjectFrontend:build:development",
+              "ssl": true,
+              "sslCert": "./certssl/localhost+2.pem",
+              "sslKey": "./certssl/localhost+2-key.pem"
             }
           },
           "defaultConfiguration": "development"
@@ -83,18 +79,10 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
+            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.css"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/styles.css"],
             "scripts": []
           }
         }

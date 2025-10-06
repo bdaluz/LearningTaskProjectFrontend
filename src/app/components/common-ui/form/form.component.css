@@ -1,0 +1,180 @@
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  padding: 24px;
+  box-sizing: border-box;
+  background-color: transparent;
+}
+
+.form-card {
+  background-color: var(--surface);
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: var(--shadow-2);
+  width: 100%;
+  max-width: 420px;
+  box-sizing: border-box;
+  text-align: center;
+  color: var(--text-primary);
+  margin: auto;
+  transition: transform 180ms var(--ease), box-shadow 180ms var(--ease);
+}
+
+.form-title {
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+  color: var(--color-primary);
+  font-weight: 700;
+  background-color: transparent;
+}
+
+.input-group {
+  margin-bottom: 16px;
+  text-align: left;
+  background-color: transparent;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: var(--eerie-black);
+  font-size: 0.95em;
+  background-color: transparent;
+}
+
+.input-group input[type="text"],
+.input-group input[type="password"],
+.input-group input[type="email"] {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 1rem;
+  color: var(--text-primary);
+  background-color: var(--bg);
+  transition: border-color 160ms var(--ease), box-shadow 160ms var(--ease);
+  box-sizing: border-box;
+}
+
+.input-group input[type="text"]:focus,
+.input-group input[type="password"]:focus,
+.input-group input[type="email"]:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  outline: none;
+}
+
+.primary-button {
+  width: 100%;
+  padding: 12px 14px;
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 120ms var(--ease), box-shadow 160ms var(--ease);
+  margin-top: 18px;
+  letter-spacing: 0.2px;
+  box-shadow: 0 6px 18px rgba(16, 24, 40, 0.06);
+}
+
+.primary-button:hover {
+  transform: translateY(-2px);
+}
+
+.primary-button:active {
+  transform: translateY(0);
+}
+
+.primary-button[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.error-wrapper {
+  min-height: 1.4rem;
+  margin-top: 14px;
+}
+.error-message {
+  color: #e24b4b;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0;
+  opacity: 1;
+  transition: opacity 180ms var(--ease), transform 180ms var(--ease);
+}
+
+.form-links {
+  margin-top: 10px;
+  text-align: center;
+  background-color: transparent;
+}
+
+.form-link {
+  color: var(--ultra-violet);
+  text-decoration: none;
+  font-size: 0.9em;
+  transition: color 0.3s ease;
+  background-color: transparent;
+  display: inline-block;
+  margin: 0 5px;
+}
+
+.form-link:hover {
+  color: #5a4b92;
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .form-card {
+    padding: 25px 20px;
+  }
+
+  .form-title {
+    font-size: 1.5em;
+    margin-bottom: 25px;
+  }
+
+  .input-group input[type="email"],
+  .input-group input[type="text"],
+  .input-group input[type="password"] {
+    padding: 10px 12px;
+    font-size: 0.95em;
+  }
+
+  .primary-button {
+    padding: 12px;
+    font-size: 1em;
+  }
+}
+
+@media (max-width: 320px) {
+  .form-card {
+    padding: 20px 15px;
+    border-radius: 8px;
+  }
+
+  .form-title {
+    font-size: 1.3em;
+    margin-bottom: 20px;
+  }
+
+  .input-group label {
+    font-size: 0.9em;
+  }
+
+  .input-group {
+    margin-bottom: 15px;
+  }
+
+  .primary-button {
+    font-size: 0.9em;
+    padding: 10px;
+  }
+}
