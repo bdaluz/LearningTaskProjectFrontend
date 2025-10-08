@@ -13,6 +13,7 @@ import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
+  private publicRoutes = ['/login', '/signup', '/'];
   private isRefreshing = false;
   private authService!: AuthService;
 
@@ -63,8 +64,12 @@ export class AuthInterceptor implements HttpInterceptor {
         }),
         catchError((err) => {
           this.isRefreshing = false;
-          this.authService.logout();
-          this.router.navigate(['/login']);
+          const currentRoute = this.router.url.split('?')[0];
+          const isPublicRoute = this.publicRoutes.includes(currentRoute);
+          if (!isPublicRoute) {
+            this.authService.logout().subscribe();
+            this.router.navigate(['/login']);
+          }
           return throwError(() => err);
         })
       );

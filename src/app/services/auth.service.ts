@@ -16,20 +16,37 @@ import {
 import { UserBasicInfo } from '../interfaces/UserBasicInfo';
 import { LoginRequest } from '../interfaces/LoginRequest';
 import { LoginResponse } from '../interfaces/LoginResponse';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   baseApiUrl: string = environment.baseApiUrl;
-  loginApiUrl: string = `${this.baseApiUrl}/User/Login`;
   private tokenKey = 'auth_token';
 
   private currentUserSubject = new BehaviorSubject<UserBasicInfo | null>(null);
   currentUser$ = this.currentUserSubject.asObservable();
 
-  constructor(private http: HttpClient) {
-    this.loadUserIfTokenValid();
+  private populationDone = new BehaviorSubject<boolean>(false);
+  isPopulationDone$ = this.populationDone.asObservable();
+
+  constructor(private http: HttpClient) {}
+
+  public populate(): void {
+    this.getUserProfile()
+      .pipe(
+        catchError(() => {
+          this.currentUserSubject.next(null);
+          return of(null);
+        }),
+        finalize(() => {
+          this.populationDone.next(true);
+        })
+      )
+      .subscribe((user) => {
+        this.currentUserSubject.next(user);
+      });
   }
 
   login(credentials: LoginRequest): Observable<UserBasicInfo | null> {
@@ -88,22 +105,42 @@ export class AuthService {
     sessionStorage.setItem(this.tokenKey, token);
   }
 
-  public loadUserIfTokenValid(): void {
-    this.getUserProfile()
-      .pipe(
-        catchError((err) => {
-          this.currentUserSubject.next(null);
-          return of(null);
-        })
-      )
-      .subscribe((user) => {
-        if (user) {
-          this.currentUserSubject.next(user);
-        }
-      });
-  }
-
   getUserProfile(): Observable<UserBasicInfo> {
     return this.http.get<UserBasicInfo>(`${this.baseApiUrl}/User/`);
+  }
+
+  isLoggedIn(): boolean {
+    const token = this.getToken();
+    return !!token && !this.isTokenExpired(token);
+  }
+
+  private isTokenExpired(token?: string): boolean {
+    if (!token) token = this.getToken() ?? undefined;
+    if (!token) return true;
+
+    try {
+      const decoded: any = jwtDecode(token);
+      if (typeof decoded.exp === 'undefined') return true;
+      const now = Math.floor(Date.now() / 1000);
+      return decoded.exp < now;
+    } catch {
+      return true;
+    }
+  }
+
+  checkAuthentication(): Observable<boolean> {
+    // if (this.isLoggedIn()) {
+    //   return of(true);
+    // }
+    return this.getUserProfile().pipe(
+      map((user) => {
+        this.currentUserSubject.next(user);
+        return true;
+      }),
+      catchError((err) => {
+        this.currentUserSubject.next(null);
+        return of(false);
+      })
+    );
   }
 }
