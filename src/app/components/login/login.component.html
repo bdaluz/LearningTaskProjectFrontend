@@ -12,20 +12,36 @@
         aria-label="Username"
         (input)="errorMessage = ''"
         autocomplete="username"
+        class="form-control"
       />
     </div>
 
     <div class="input-group">
       <label for="password">Password</label>
-      <input
-        type="password"
-        id="password"
-        formControlName="password"
-        required
-        aria-label="Password"
-        (input)="errorMessage = ''"
-        autocomplete="current-password"
-      />
+      <div class="input-wrapper">
+        <input
+          [type]="hidePassword ? 'password' : 'text'"
+          id="password"
+          formControlName="password"
+          required
+          aria-label="Password"
+          (input)="errorMessage = ''"
+          autocomplete="current-password"
+          class="form-control has-icon"
+        />
+        <button
+          type="button"
+          mat-icon-button
+          (click)="togglePasswordVisibility($event)"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hidePassword"
+          class="toggle-password-button"
+        >
+          <mat-icon>{{
+            hidePassword ? "visibility_off" : "visibility"
+          }}</mat-icon>
+        </button>
+      </div>
     </div>
 
     <button type="submit" class="primary-button">Login</button>

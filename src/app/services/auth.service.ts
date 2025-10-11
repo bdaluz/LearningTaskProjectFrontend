@@ -76,6 +76,9 @@ export class AuthService {
       );
   }
 
+  signup(signupRequest: SignupRequest): Observable<any> {
+    return this.http.post(`${this.baseApiUrl}/User/CreateUser`, signupRequest);
+  }
   public refreshToken(): Observable<string> {
     return this.http
       .post<{ token: string }>(

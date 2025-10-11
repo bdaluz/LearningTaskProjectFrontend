@@ -6,12 +6,18 @@ import { LoginComponent } from './components/login/login.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { authGuard } from './guards/auth.guard';
 import { noAuthGuard } from './guards/no-auth.guard';
+import { SignupComponent } from './components/signup/signup.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   {
     path: 'login',
     component: LoginComponent,
+    canActivate: [noAuthGuard],
+  },
+  {
+    path: 'signup',
+    component: SignupComponent,
     canActivate: [noAuthGuard],
   },
   {

@@ -13,6 +13,7 @@ export class LoginComponent {
   loginForm!: FormGroup;
   errorMessage: string = '';
   isSubmitting: boolean = false;
+  hidePassword = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -62,5 +63,10 @@ export class LoginComponent {
       this.isSubmitting = false;
       this.errorMessage = 'An unexpected error occurred. Please try again.';
     }
+  }
+
+  togglePasswordVisibility(event: MouseEvent): void {
+    event.stopPropagation();
+    this.hidePassword = !this.hidePassword;
   }
 }

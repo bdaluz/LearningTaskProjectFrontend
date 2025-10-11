@@ -21,6 +21,7 @@ nav {
 
 .brand h2 {
   transition: 0.4s;
+  margin: 0;
 }
 
 .brand:hover h2 {

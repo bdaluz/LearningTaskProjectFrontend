@@ -35,6 +35,7 @@
   margin-bottom: 16px;
   text-align: left;
   background-color: transparent;
+  position: relative;
 }
 
 .input-group label {
@@ -46,9 +47,7 @@
   background-color: transparent;
 }
 
-.input-group input[type="text"],
-.input-group input[type="password"],
-.input-group input[type="email"] {
+.input-group .form-control {
   width: 100%;
   padding: 12px 14px;
   border: 1px solid var(--border);
@@ -60,12 +59,65 @@
   box-sizing: border-box;
 }
 
-.input-group input[type="text"]:focus,
-.input-group input[type="password"]:focus,
-.input-group input[type="email"]:focus {
+.input-group .form-control:focus {
   border-color: var(--color-primary);
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
   outline: none;
+}
+
+.input-group .form-control:-webkit-autofill,
+.input-group .form-control:-webkit-autofill:hover,
+.input-group .form-control:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--text-primary) !important;
+  box-shadow: 0 0 0 30px var(--bg) inset !important;
+  border: 1px solid var(--border) !important;
+}
+
+.input-group .form-control.has-icon {
+  padding-right: 45px;
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-wrapper .form-control {
+  padding-right: 40px;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 1px;
+  top: 1px;
+  bottom: 1px;
+  width: 40px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+}
+.toggle-password:hover {
+  color: var(--color-primary);
+}
+
+.toggle-password-button {
+  position: absolute;
+  top: 47%;
+  transform: translateY(-50%);
+  right: 0px;
+  z-index: 2;
+  background: transparent;
+  border: none;
+  color: #777;
 }
 
 .primary-button {
@@ -108,6 +160,10 @@
   margin: 0;
   opacity: 1;
   transition: opacity 180ms var(--ease), transform 180ms var(--ease);
+}
+
+.error-message span {
+  color: #e24b4b;
 }
 
 .form-links {
@@ -177,4 +233,27 @@
     font-size: 0.9em;
     padding: 10px;
   }
+}
+
+/* signup form*/
+
+.form-description {
+  font-size: 0.95em;
+  color: var(--text-secondary);
+  margin-bottom: 25px;
+  background-color: transparent;
+}
+
+.disabled-input {
+  background-color: var(--gray-200);
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.success-message {
+  color: #4caf50;
+  margin-top: 20px;
+  font-size: 0.9em;
+  font-weight: 500;
+  background-color: transparent;
 }
