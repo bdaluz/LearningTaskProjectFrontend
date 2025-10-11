@@ -17,6 +17,7 @@ import { UserBasicInfo } from '../interfaces/UserBasicInfo';
 import { LoginRequest } from '../interfaces/LoginRequest';
 import { LoginResponse } from '../interfaces/LoginResponse';
 import { jwtDecode } from 'jwt-decode';
+import { ChangePasswordRequest } from '../interfaces/ChangePasswordRequest';
 
 @Injectable({
   providedIn: 'root',
@@ -79,6 +80,17 @@ export class AuthService {
   signup(signupRequest: SignupRequest): Observable<any> {
     return this.http.post(`${this.baseApiUrl}/User/CreateUser`, signupRequest);
   }
+
+  requestPasswordReset(email: string): Observable<any> {
+    return this.http.post(`${this.baseApiUrl}/User/SendPasswordReset`, {
+      email,
+    });
+  }
+
+  resetPassword(request: ChangePasswordRequest): Observable<any> {
+    return this.http.post(`${this.baseApiUrl}/User/ChangePassword`, request);
+  }
+
   public refreshToken(): Observable<string> {
     return this.http
       .post<{ token: string }>(

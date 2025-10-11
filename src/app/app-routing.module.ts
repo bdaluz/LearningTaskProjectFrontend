@@ -4,6 +4,8 @@ import { HomeComponent } from './components/home/home.component';
 import { TaskDashboardComponent } from './components/task-dashboard/task-dashboard.component';
 import { LoginComponent } from './components/login/login.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { authGuard } from './guards/auth.guard';
 import { noAuthGuard } from './guards/no-auth.guard';
 import { SignupComponent } from './components/signup/signup.component';
@@ -18,6 +20,16 @@ const routes: Routes = [
   {
     path: 'signup',
     component: SignupComponent,
+    canActivate: [noAuthGuard],
+  },
+  {
+    path: 'forgot-password',
+    component: ForgotPasswordComponent,
+    canActivate: [noAuthGuard],
+  },
+  {
+    path: 'reset-password/:token',
+    component: ResetPasswordComponent,
     canActivate: [noAuthGuard],
   },
   {
