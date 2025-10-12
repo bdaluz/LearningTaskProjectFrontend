@@ -58,7 +58,6 @@ export class LoginComponent {
         },
       });
     } catch (err) {
-      console.error('[Login] synchronous error while subscribing', err);
       this.loginForm.enable();
       this.isSubmitting = false;
       this.errorMessage = 'An unexpected error occurred. Please try again.';

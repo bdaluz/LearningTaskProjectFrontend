@@ -45,7 +45,6 @@ export class ForgotPasswordComponent implements OnInit {
         this.isError = false;
         this.message =
           'If an account with that email address exists, a password reset link has been sent.';
-        console.error('Error requesting password reset:', error);
       },
     });
   }

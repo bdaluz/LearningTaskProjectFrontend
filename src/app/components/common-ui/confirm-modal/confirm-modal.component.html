@@ -1,0 +1,10 @@
+<div class="modal-overlay" (click)="onOverlayClick($event)">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <h3>Confirm Deletion</h3>
+    <p>{{ message }}</p>
+    <div class="modal-actions">
+      <button class="confirm-button" (click)="onConfirm(true)">Yes</button>
+      <button class="cancel-button" (click)="onConfirm(false)">No</button>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -10,7 +11,6 @@ import { LoginComponent } from './components/login/login.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
 import { NgOptimizedImage } from '@angular/common';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -19,6 +19,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { ConfirmModalComponent } from './components/common-ui/confirm-modal/confirm-modal.component';
 
 @NgModule({
   declarations: [
@@ -31,11 +32,13 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
     SignupComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
+    ConfirmModalComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule,
     ReactiveFormsModule,
     NgOptimizedImage,
     MatFormFieldModule,
