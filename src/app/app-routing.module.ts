@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
-import { TaskDashboardComponent } from './components/task-dashboard/task-dashboard.component';
 import { LoginComponent } from './components/login/login.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
@@ -33,14 +32,14 @@ const routes: Routes = [
     canActivate: [noAuthGuard],
   },
   {
-    path: 'dashboard',
-    component: TaskDashboardComponent,
-    canActivate: [authGuard],
-  },
-  {
     path: 'profile',
     component: UserProfileComponent,
     canActivate: [authGuard],
+  },
+  {
+    path: 'dashboard',
+    loadChildren: () =>
+      import('./features/tasks/tasks.module').then((m) => m.TasksModule),
   },
 ];
 

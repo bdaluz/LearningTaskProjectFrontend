@@ -1,67 +1,16 @@
 <div class="task-grid-container">
-  <div class="task-card create-card">
-    <div class="task-header">
-      <textarea
-        class="task-title"
-        [(ngModel)]="newTitle"
-        role="textbox"
-        aria-label="Task title"
-        placeholder="New Task Title"
-      ></textarea>
+  <app-task-card
+    [isCreateMode]="true"
+    (taskCreated)="createNewTask($event)"
+  ></app-task-card>
 
-      <div class="task-actions">
-        <button
-          role="button"
-          class="create-task-button"
-          tabindex="0"
-          (click)="createNewTask()"
-        >
-          +
-        </button>
-      </div>
-    </div>
-    <textarea
-      class="task-description"
-      [(ngModel)]="newDescription"
-      aria-label="Task description"
-      placeholder="New Task Description"
-    ></textarea>
-  </div>
-
-  <div *ngFor="let task of tasks" class="task-card">
-    <div class="task-header">
-      <textarea
-        class="task-title"
-        [(ngModel)]="task.title"
-        (focus)="startEditing(task)"
-        (blur)="saveIfChanged(task)"
-        (input)="onTaskInput(task)"
-        role="textbox"
-        aria-label="Task title"
-      ></textarea>
-
-      <div class="task-actions">
-        <input
-          type="checkbox"
-          [checked]="task.isCompleted"
-          (change)="toggleTaskCompletion(task)"
-          aria-label="Mark task as complete"
-        />
-        <button role="button" tabindex="0" (click)="openDeleteConfirm(task)">
-          X
-        </button>
-      </div>
-    </div>
-
-    <textarea
-      class="task-description"
-      [(ngModel)]="task.description"
-      (focus)="startEditing(task)"
-      (blur)="saveIfChanged(task)"
-      (input)="onTaskInput(task)"
-      aria-label="Task description"
-    ></textarea>
-  </div>
+  <app-task-card
+    *ngFor="let task of tasks"
+    [task]="task"
+    (taskCompleted)="toggleTaskCompletion($event)"
+    (taskDeleted)="openDeleteConfirm($event)"
+    (taskUpdated)="saveIfChanged($event)"
+  ></app-task-card>
 </div>
 
 <app-confirm-modal

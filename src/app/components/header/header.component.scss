@@ -1,0 +1,240 @@
+%flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+nav {
+  position: fixed;
+  top: 0;
+  z-index: 999;
+  width: 100%;
+  height: 7vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.brand,
+.tools,
+.links {
+  @extend %flex-center;
+}
+
+.brand {
+  img {
+    height: 50px;
+    width: 50px;
+  }
+  h2 {
+    transition: 0.4s;
+    margin: 0;
+    font-size: 1.4em;
+    span {
+      display: inline-block;
+    }
+  }
+  &:hover h2 span {
+    transition: 0.5s;
+    color: var(--color-secondary);
+  }
+}
+
+.links {
+  li {
+    list-style: none;
+    margin: 1em 1em;
+    border-left: solid var(--secondary-color) 3px;
+
+    a {
+      color: var(--text-primary);
+      font-weight: 600;
+      font-size: 1.1em;
+      transition: color 0.2s var(--ease);
+      padding: 1em;
+
+      &:hover {
+        color: var(--color-primary);
+      }
+      &.active-link {
+        color: color-mix(in srgb, var(--color-primary) 70%, white);
+      }
+    }
+  }
+}
+
+.circle {
+  display: inline-block;
+  background-color: var(--color-primary);
+  border-radius: 50%;
+  cursor: pointer;
+
+  .circle-inner {
+    font-family: Arial, sans-serif;
+    color: white;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1.8em;
+    font-weight: bolder;
+    height: 45px;
+    min-width: 45px;
+    width: 45px;
+    user-select: none;
+  }
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: transparent;
+    min-width: 160px;
+    z-index: 1000;
+    top: calc(100% + 10px);
+    right: 0;
+    color: var(--text-primary);
+
+    &.show {
+      display: block;
+    }
+
+    a {
+      display: block;
+      background-color: var(--surface);
+      color: var(--text-primary);
+      padding: 10px 14px;
+      border-radius: 8px;
+      text-decoration: none;
+      text-align: left;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      cursor: pointer;
+
+      &:hover {
+        transition: background-color 160ms var(--ease), color 160ms var(--ease);
+        background-color: color-mix(
+          in srgb,
+          var(--color-primary) 8%,
+          var(--surface)
+        );
+      }
+    }
+  }
+}
+
+.hamburger-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 2rem;
+  height: 2rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 2000;
+
+  &:focus {
+    outline: none;
+  }
+
+  span {
+    width: 2rem;
+    height: 0.25rem;
+    background: var(--text-primary);
+    border-radius: 10px;
+    transition: all 0.3s linear;
+    position: relative;
+    transform-origin: 1px;
+  }
+}
+
+.desktop-only {
+  display: flex;
+}
+.mobile-only {
+  display: none;
+}
+
+@media (max-width: 568px) {
+  .hamburger-btn {
+    display: flex;
+  }
+
+  .brand h2 {
+    line-height: 0.9;
+    font-size: 1rem;
+    span {
+      display: block;
+    }
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    min-width: 35%;
+    background: var(--surface);
+    border-left: 1px solid var(--border);
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 5rem;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 1999;
+
+    &.active {
+      transform: translateX(0);
+    }
+
+    .links li {
+      margin: 1rem 0;
+      padding-left: 0;
+      border-left: none;
+    }
+  }
+
+  .desktop-only {
+    display: none;
+  }
+
+  .mobile-only {
+    display: list-item;
+    width: 100%;
+    text-align: center;
+    a {
+      display: block;
+      padding: 10px 0;
+    }
+  }
+}
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+
+  .theme-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    padding: 8px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--text-primary);
+    font-size: 1.1rem;
+
+    &:focus {
+      outline: 2px solid
+        color-mix(in srgb, var(--color-primary) 40%, transparent);
+    }
+  }
+}

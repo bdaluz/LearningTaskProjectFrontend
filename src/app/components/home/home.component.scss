@@ -1,0 +1,104 @@
+main {
+  display: flex;
+  flex-direction: column;
+  height: calc(100svh - 7vh);
+  padding: 1rem 1rem 0 1rem;
+  gap: 1.5rem;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+div.titles {
+  width: 90%;
+  max-width: 500px;
+  margin: 0 auto;
+  color: var(--text-primary);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  flex-shrink: 0;
+}
+
+picture {
+  width: 100%;
+  flex-grow: 1;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 0;
+}
+
+picture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top left;
+}
+
+div.titles h1 {
+  margin: 0;
+}
+
+h1 span {
+  font-size: clamp(2.8rem, 10vw, 4rem);
+  display: block;
+  line-height: 1.1;
+  font-weight: bold;
+}
+
+div.titles h3 {
+  margin: 0;
+  font-size: clamp(1.2rem, 4vw, 1.5rem);
+  line-height: 1.4;
+}
+
+div.titles h3 span {
+  display: block;
+}
+
+@media (min-width: 801px) {
+  main {
+    position: relative;
+    min-height: calc(100vh - 7vh);
+    padding: 2rem 5%;
+  }
+
+  div.titles {
+    position: absolute;
+    left: 5%;
+    top: 50%;
+    padding-right: 30px;
+    transform: translateY(-50%);
+    width: 35%;
+    max-width: 550px;
+    text-align: left;
+    z-index: 1;
+  }
+
+  div.titles h1,
+  div.titles h3 {
+    margin: 0;
+  }
+
+  div.titles h1 span {
+    font-size: clamp(4rem, calc(3rem + 2vw), 16.5rem);
+  }
+
+  div.titles h3 span {
+    font-size: clamp(1.4rem, calc(1rem + 0.5vw), 1.8rem);
+  }
+
+  picture {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 60%;
+    max-height: 85svh;
+    display: block;
+  }
+
+  picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}

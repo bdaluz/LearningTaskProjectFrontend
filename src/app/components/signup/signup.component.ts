@@ -16,7 +16,7 @@ import { SignupRequest } from './../../interfaces/SignupRequest';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.css'],
+  styleUrls: ['./signup.component.scss'],
 })
 export class SignupComponent implements OnInit, OnDestroy {
   signupForm!: FormGroup;

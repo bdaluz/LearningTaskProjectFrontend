@@ -1,0 +1,58 @@
+<div class="task-card" [class.create-card]="isCreateMode">
+  <div class="task-header">
+    <textarea
+      *ngIf="isCreateMode"
+      class="task-title"
+      placeholder="New Task Title"
+      [(ngModel)]="newTitle"
+    ></textarea>
+    <textarea
+      *ngIf="!isCreateMode && task"
+      class="task-title"
+      [(ngModel)]="task.title"
+      (focus)="startEditing()"
+      (blur)="saveIfChanged()"
+      (input)="onTaskInput()"
+    ></textarea>
+
+    <div class="task-actions">
+      <ng-container *ngIf="!isCreateMode">
+        <input
+          type="checkbox"
+          [checked]="task!.isCompleted"
+          (change)="onToggleCompletion()"
+          aria-label="Mark task as complete"
+        />
+        <button role="button" tabindex="0" (click)="onDeleteRequest()">
+          X
+        </button>
+      </ng-container>
+
+      <ng-container *ngIf="isCreateMode">
+        <button
+          role="button"
+          class="create-task-button"
+          tabindex="0"
+          (click)="onCreate()"
+        >
+          +
+        </button>
+      </ng-container>
+    </div>
+  </div>
+
+  <textarea
+    *ngIf="isCreateMode"
+    class="task-description"
+    placeholder="New Task Description"
+    [(ngModel)]="newDescription"
+  ></textarea>
+  <textarea
+    *ngIf="!isCreateMode && task"
+    class="task-description"
+    [(ngModel)]="task.description"
+    (focus)="startEditing()"
+    (blur)="saveIfChanged()"
+    (input)="onTaskInput()"
+  ></textarea>
+</div>

@@ -1,13 +1,3 @@
-.task-grid-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  max-height: calc(6 * 360px);
-  overflow-y: auto;
-  gap: 20px;
-  padding: 20px;
-}
-
 .task-card {
   background-color: var(--surface);
   border-radius: 8px;
@@ -18,6 +8,7 @@
   position: relative;
   height: 400px;
   max-width: 354px;
+  min-width: 354px;
   width: 100%;
   flex-grow: 0;
   flex-shrink: 0;
@@ -181,7 +172,7 @@
   color: var(--text-primary);
   font-size: 1.2em;
   cursor: pointer;
-  padding: 4px 8px;
+  padding: 0px 8px;
   border-radius: 4px;
   transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
   opacity: 0.8;
@@ -206,6 +197,11 @@
   transform: scale(0.98);
 }
 
+.task-card.create-card .task-title::placeholder,
+.task-card.create-card .task-description::placeholder {
+  color: var(--muted);
+}
+
 .task-actions .create-task-button {
   font-family: Arial, Helvetica, sans-serif;
   background-color: var(--color-primary);
@@ -216,47 +212,4 @@
 .task-actions:hover .create-task-button {
   color: white;
   background-color: color-mix(in srgb, var(--color-primary) 80%, black);
-}
-
-.task-grid-container .create-card {
-  background-color: var(--surface);
-}
-.task-grid-container .create-card .task-title::placeholder,
-.task-grid-container .create-card .task-description::placeholder {
-  color: var(--muted);
-}
-
-.app-message {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 15px 30px;
-  border-radius: 8px;
-  font-size: 1.1em;
-  font-weight: bold;
-  color: var(--antiflash-white);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1001;
-  min-width: 250px;
-  text-align: center;
-}
-
-.app-message.success {
-  background-color: var(--color-success);
-}
-
-.app-message.error {
-  background-color: var(--color-error);
-}
-
-.task-grid-container::-webkit-scrollbar {
-  width: 8px;
-}
-.task-grid-container::-webkit-scrollbar-track {
-  background: transparent;
-}
-.task-grid-container::-webkit-scrollbar-thumb {
-  background-color: var(--color-primary);
-  border-radius: 4px;
 }

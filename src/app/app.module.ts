@@ -6,7 +6,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { HeaderComponent } from './components/header/header.component';
-import { TaskDashboardComponent } from './components/task-dashboard/task-dashboard.component';
 import { LoginComponent } from './components/login/login.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { SignupComponent } from './components/signup/signup.component';
@@ -19,20 +18,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
-import { ConfirmModalComponent } from './components/common-ui/confirm-modal/confirm-modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     HeaderComponent,
-    TaskDashboardComponent,
     LoginComponent,
     UserProfileComponent,
     SignupComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
-    ConfirmModalComponent,
   ],
   imports: [
     BrowserModule,

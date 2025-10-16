@@ -8,13 +8,15 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css'],
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnDestroy {
   userEmail: string = '';
   usernameInitial: string = '';
   isDropdownOpen: boolean = false;
   isLoggedIn: boolean = false;
+
+  isMenuOpen: boolean = false;
 
   currentTheme: Theme = 'light';
   private themeSub?: Subscription;
@@ -70,6 +72,14 @@ export class HeaderComponent implements OnDestroy {
     this.isDropdownOpen = false;
   }
 
+  toggleMenu(): void {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  closeMenu(): void {
+    this.isMenuOpen = false;
+  }
+
   onAvatarKeydown(event: KeyboardEvent): void {
     const key = event.key;
     if (key === 'Enter' || key === ' ') {
@@ -89,6 +99,18 @@ export class HeaderComponent implements OnDestroy {
   clickOutside(event: Event) {
     if (!this.elementRef.nativeElement.contains(event.target)) {
       this.closeDropdown();
+    }
+    const target = event.target as HTMLElement;
+    if (
+      this.isMenuOpen &&
+      !this.elementRef.nativeElement
+        .querySelector('.nav-links')
+        .contains(target) &&
+      !this.elementRef.nativeElement
+        .querySelector('.hamburger-btn')
+        .contains(target)
+    ) {
+      this.closeMenu();
     }
   }
 

@@ -1,21 +1,47 @@
 <nav>
   <div class="nav-left">
     <a class="brand" routerLink="/">
-      <img [ngSrc]="logoSrc" alt="Tasks-icon" height="40" width="40" />
-      <h2>SimpTasks</h2>
+      <img
+        [ngSrc]="logoSrc"
+        alt="Tasks-icon"
+        height="40"
+        width="40"
+        priority="low"
+      />
+      <h2><span>Simp</span><span>Tasks</span></h2>
     </a>
   </div>
 
-  <ul class="links">
+  <button
+    class="hamburger-btn"
+    (click)="toggleMenu()"
+    aria-label="Toggle navigation menu"
+    [attr.aria-expanded]="isMenuOpen"
+  >
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <ul class="links nav-links" [class.active]="isMenuOpen">
     <li *ngIf="!isLoggedIn">
-      <a routerLink="/login" routerLinkActive="active-link">Login</a>
+      <a
+        routerLink="/login"
+        routerLinkActive="active-link"
+        (click)="closeMenu()"
+        >Login</a
+      >
     </li>
     <li *ngIf="isLoggedIn">
-      <a routerLink="/dashboard" routerLinkActive="active-link"
+      <a
+        routerLink="/dashboard"
+        routerLinkActive="active-link"
+        (click)="closeMenu()"
         >Tasks Dashboard</a
       >
     </li>
-    <li *ngIf="usernameInitial" class="dropdown">
+
+    <li *ngIf="usernameInitial" class="dropdown desktop-only">
       <div
         class="circle"
         role="button"
@@ -27,7 +53,6 @@
       >
         <p class="circle-inner">{{ usernameInitial }}</p>
       </div>
-
       <div
         class="dropdown-content"
         [class.show]="isDropdownOpen"
@@ -44,6 +69,19 @@
         <a (click)="logout()" role="menuitem" tabindex="0">Logout</a>
       </div>
     </li>
+
+    <li *ngIf="usernameInitial" class="mobile-only">
+      <a
+        routerLink="/profile"
+        routerLinkActive="active-link"
+        (click)="closeMenu()"
+        >Profile</a
+      >
+    </li>
+    <li *ngIf="usernameInitial" class="mobile-only">
+      <a (click)="logout(); closeMenu()" style="cursor: pointer">Logout</a>
+    </li>
+
     <li class="theme-toggle">
       <button
         class="theme-btn"
