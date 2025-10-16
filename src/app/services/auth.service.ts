@@ -34,20 +34,19 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  public populate(): void {
-    this.getUserProfile()
-      .pipe(
-        catchError(() => {
-          this.currentUserSubject.next(null);
-          return of(null);
-        }),
-        finalize(() => {
-          this.populationDone.next(true);
-        })
-      )
-      .subscribe((user) => {
+  public populate(): Observable<any> {
+    return this.getUserProfile().pipe(
+      catchError(() => {
+        this.currentUserSubject.next(null);
+        return of(null);
+      }),
+      tap((user) => {
         this.currentUserSubject.next(user);
-      });
+      }),
+      finalize(() => {
+        this.populationDone.next(true);
+      })
+    );
   }
 
   login(credentials: LoginRequest): Observable<UserBasicInfo | null> {

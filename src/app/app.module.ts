@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -18,6 +18,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { Observable } from 'rxjs';
+import { AuthService } from './services/auth.service';
+
+export function initializeAppFactory(
+  authService: AuthService
+): () => Observable<any> {
+  return () => authService.populate();
+}
 
 @NgModule({
   declarations: [
@@ -46,6 +54,12 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
+      multi: true,
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeAppFactory,
+      deps: [AuthService],
       multi: true,
     },
   ],

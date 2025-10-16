@@ -40,7 +40,9 @@ const routes: Routes = [
     path: 'dashboard',
     loadChildren: () =>
       import('./features/tasks/tasks.module').then((m) => m.TasksModule),
+    canActivate: [authGuard],
   },
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({
