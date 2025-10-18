@@ -13,7 +13,11 @@ export class TaskCardComponent {
 
   @Output() taskCompleted = new EventEmitter<Task>();
   @Output() taskDeleted = new EventEmitter<Task>();
-  @Output() taskUpdated = new EventEmitter<Task>();
+
+  @Output() taskUpdated = new EventEmitter<{
+    task: Task;
+    oldState: { title: string; description: string };
+  }>();
 
   @Output() taskCreated = new EventEmitter<{
     title: string;
@@ -32,6 +36,9 @@ export class TaskCardComponent {
       title: this.newTitle,
       description: this.newDescription,
     });
+  }
+
+  clearFields(): void {
     this.newTitle = '';
     this.newDescription = '';
   }
@@ -61,7 +68,10 @@ export class TaskCardComponent {
       this.task.description !== this.originalTaskState.description;
 
     if (hasChanged) {
-      this.taskUpdated.emit(this.task);
+      this.taskUpdated.emit({
+        task: this.task,
+        oldState: this.originalTaskState,
+      });
     }
 
     this.originalTaskState = null;

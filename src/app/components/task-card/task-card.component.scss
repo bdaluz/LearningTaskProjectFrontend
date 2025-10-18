@@ -7,209 +7,195 @@
   flex-direction: column;
   position: relative;
   height: 400px;
-  max-width: 354px;
-  min-width: 354px;
-  width: 100%;
-  flex-grow: 0;
-  flex-shrink: 0;
-}
+  width: 354px;
 
-.task-card .task-header {
-  background-color: transparent;
-  margin-bottom: 10px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 10px;
-}
+  .task-header {
+    background-color: transparent;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+  }
 
-.task-card input[type="checkbox"] {
-  min-width: 20px;
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-  background-color: transparent;
+  input[type="checkbox"] {
+    min-width: 20px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    background-color: transparent;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 2px solid var(--color-primary);
+    border-radius: 4px;
+    outline: none;
+    transition: background-color 0.2s, border-color 0.2s;
 
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  border: 2px solid var(--color-primary);
-  border-radius: 4px;
-  outline: none;
-  transition: background-color 0.2s, border-color 0.2s;
-}
+    &:checked {
+      background-color: var(--color-primary);
+      border-color: var(--color-primary);
 
-.task-card input[type="checkbox"]:checked {
-  background-color: var(--color-primary);
-  border-color: var(--color-primary);
-}
+      &::before {
+        content: "\2713";
+        display: block;
+        color: white;
+        font-size: 16px;
+        line-height: 16px;
+        text-align: center;
+      }
+    }
 
-.task-card input[type="checkbox"]:checked::before {
-  content: "\2713";
-  display: block;
-  color: white;
-  font-size: 16px;
-  line-height: 16px;
-  text-align: center;
-}
+    &:focus {
+      box-shadow: 0 0 0 3px
+        color-mix(in srgb, var(--color-primary) 50%, transparent);
+    }
+  }
 
-.task-card input[type="checkbox"]:focus {
-  box-shadow: 0 0 0 3px
-    color-mix(in srgb, var(--color-primary) 50%, transparent);
-}
+  .task-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: var(--text-primary);
+    background-color: transparent;
+    width: 100%;
+    height: auto;
+    min-height: calc(1.5em + 8px);
+    max-height: calc(1.5em * 4 + 8px);
+    margin: 0;
+    padding: 4px 6px;
+    border: none;
+    outline: none;
+    resize: none;
+    box-sizing: border-box;
+    overflow-y: auto;
+    overflow-x: hidden;
+    line-height: 1.5em;
 
-.task-title {
-  font-size: 1.5em;
-  font-weight: bold;
-  color: var(--text-primary);
-  background-color: transparent;
+    &::-webkit-scrollbar {
+      width: 2px;
+    }
+  }
 
-  width: 100%;
-  height: auto;
-  min-height: calc(1.5em + 8px);
-  max-height: calc(1.5em * 4 + 8px);
+  .task-description {
+    color: var(--text-primary);
+    font-size: 1.4em;
+    flex-grow: 1;
+    padding-right: 5px;
+    cursor: text;
+    width: 100%;
+    height: auto;
+    min-height: 100px;
+    border: none;
+    resize: none;
+    outline: none;
+    overflow: auto;
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent,
+      transparent 26px,
+      color-mix(in srgb, var(--border) 50%, transparent) 27px,
+      transparent 28px
+    );
+    background-attachment: local;
+    line-height: 28px;
+    padding-left: 10px;
+    white-space: pre-wrap;
 
-  margin: 0;
-  padding: 4px 6px;
-  border: none;
-  outline: none;
-  resize: none;
-  box-sizing: border-box;
+    &::-webkit-scrollbar {
+      width: 3px;
+    }
+  }
 
-  overflow-y: auto;
-  overflow-x: hidden;
+  .task-title::-webkit-scrollbar-thumb,
+  .task-description::-webkit-scrollbar-thumb {
+    background-color: var(--color-primary);
+    border-radius: 4px;
+    cursor: grab;
+  }
 
-  line-height: 1.5em;
-}
+  .task-actions {
+    padding-top: 5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-direction: column;
+    user-select: none;
 
-.task-title::-webkit-scrollbar {
-  width: 2px;
-}
-.task-title::-webkit-scrollbar-thumb {
-  background-color: var(--color-primary);
-  border-radius: 4px;
-}
+    input[type="checkbox"] {
+      transform: scale(1.2);
+      cursor: pointer;
+    }
 
-.task-description {
-  color: var(--text-primary);
-  font-size: 1.4em;
-  flex-grow: 1;
-  padding-right: 5px;
-  cursor: text;
+    .close {
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      color: var(--color-primary);
+      border: 1.5px solid var(--color-action);
+      font-size: 1.4em;
+      cursor: pointer;
+      transition: background-color 0.2s ease, color 0.2s ease,
+        transform 0.2s ease;
+      opacity: 0.8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
 
-  width: 100%;
-  height: auto;
-  min-height: 100px;
-  border: none;
-  resize: none;
-  outline: none;
-  overflow: auto;
+      &:hover {
+        background-color: var(--color-action);
+        color: white;
+        transform: scale(1.05);
+        opacity: 1;
+      }
+    }
 
-  background: repeating-linear-gradient(
-    to bottom,
-    transparent,
-    transparent 26px,
-    color-mix(in srgb, var(--border) 50%, transparent) 27px,
-    transparent 28px
-  );
-  background-attachment: local;
-  line-height: 28px;
-  padding-left: 10px;
-  white-space: pre-wrap;
-}
+    button {
+      background-color: transparent;
+      border: none;
+      color: var(--text-primary);
+      font-size: 1.2em;
+      cursor: pointer;
+      padding: 0px 8px;
+      border-radius: 4px;
+      transition: background-color 0.2s ease, color 0.2s ease,
+        transform 0.2s ease;
+      opacity: 0.8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-.task-description::-webkit-scrollbar {
-  width: 3px;
-}
-.task-description::-webkit-scrollbar-thumb {
-  background-color: var(--color-primary);
-  border-radius: 4px;
-}
+      &:hover {
+        background-color: var(--color-primary);
+        color: var(--surface);
+        transform: scale(1.05);
+        opacity: 1;
+      }
 
-.task-actions {
-  padding-top: 5px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-direction: column;
-  user-select: none;
-}
+      &:active {
+        background-color: color-mix(in srgb, var(--color-primary) 80%, black);
+        transform: scale(0.98);
+      }
+    }
 
-.task-actions input[type="checkbox"] {
-  transform: scale(1.2);
-  cursor: pointer;
-}
+    .create-task-button {
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: var(--color-primary);
+      font-size: 1.7em;
+      color: white;
 
-.task-actions .close {
-  width: 24px;
-  height: 24px;
-  border-radius: 4px;
-  color: var(--color-primary);
-  border: 1.5px solid var(--color-action);
-  font-size: 1.4em;
-  cursor: pointer;
-  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
-  opacity: 0.8;
+      &:hover {
+        color: white;
+        background-color: color-mix(in srgb, var(--color-primary) 80%, black);
+      }
+    }
+  }
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  user-select: none;
-}
-
-.task-actions .close:hover {
-  background-color: var(--color-action);
-  color: white;
-  transform: scale(1.05);
-  opacity: 1;
-}
-
-.task-actions button {
-  background-color: transparent;
-  border: none;
-  color: var(--text-primary);
-  font-size: 1.2em;
-  cursor: pointer;
-  padding: 0px 8px;
-  border-radius: 4px;
-  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
-  opacity: 0.8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.task-actions button:hover {
-  color: var(--color-primary);
-  transform: scale(1.05);
-  opacity: 1;
-}
-
-.task-actions button:hover {
-  background-color: var(--color-primary);
-  color: var(--surface);
-}
-
-.task-actions button:active {
-  background-color: color-mix(in srgb, var(--color-primary) 80%, black);
-  transform: scale(0.98);
-}
-
-.task-card.create-card .task-title::placeholder,
-.task-card.create-card .task-description::placeholder {
-  color: var(--muted);
-}
-
-.task-actions .create-task-button {
-  font-family: Arial, Helvetica, sans-serif;
-  background-color: var(--color-primary);
-  font-size: 1.7em;
-  color: white;
-}
-
-.task-actions:hover .create-task-button {
-  color: white;
-  background-color: color-mix(in srgb, var(--color-primary) 80%, black);
+  &.create-card {
+    .task-title::placeholder,
+    .task-description::placeholder {
+      color: var(--muted);
+    }
+  }
 }

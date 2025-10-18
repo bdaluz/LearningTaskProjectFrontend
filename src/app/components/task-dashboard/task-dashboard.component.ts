@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TaskService } from 'src/app/services/task.service';
 import { Task } from 'src/app/interfaces/Task';
 import { timer } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { TaskCardComponent } from '../task-card/task-card.component';
 
 @Component({
   selector: 'app-task-dashboard',
@@ -10,6 +11,8 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./task-dashboard.component.scss'],
 })
 export class TaskDashboardComponent implements OnInit {
+  @ViewChild('createCard') createCardComponent!: TaskCardComponent;
+
   tasks: Task[] = [];
 
   //For Modal
@@ -25,6 +28,39 @@ export class TaskDashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadTasks();
+  }
+
+  private handleApiError(
+    error: HttpErrorResponse,
+    contextMessage: string
+  ): any | null {
+    if (error.status === 400 && error.error?.errors) {
+      const validationErrors = error.error.errors;
+      const messages = (Object.values(validationErrors) as string[][]).flat();
+
+      if (messages.length > 0) {
+        this.displayMessage(
+          `${contextMessage}:\n` + messages.join('\n'),
+          'error'
+        );
+      } else {
+        this.displayMessage(`${contextMessage}: Verify your input.`, 'error');
+      }
+      return validationErrors;
+    }
+    this.displayMessage(`${contextMessage}: Try again later.`, 'error');
+    return null;
+  }
+
+  private isRequiredError(errorMessages: string[]): boolean {
+    if (!errorMessages || errorMessages.length === 0) {
+      return false;
+    }
+    return errorMessages.some(
+      (msg) =>
+        msg.includes('is required') ||
+        msg.includes('at least 1 characters long')
+    );
   }
 
   loadTasks(): void {
@@ -64,18 +100,42 @@ export class TaskDashboardComponent implements OnInit {
     });
   }
 
-  saveIfChanged(task: Task): void {
+  saveIfChanged(eventData: {
+    task: Task;
+    oldState: { title: string; description: string };
+  }): void {
+    const { task, oldState } = eventData;
+
     if (task.id === undefined) return;
 
-    const { title, description } = task;
+    this.taskService
+      .updateTask(task.id, { title: task.title, description: task.description })
+      .subscribe({
+        next: () => {
+          this.displayMessage('Task updated successfully!', 'success');
+        },
+        error: (err: HttpErrorResponse) => {
+          const validationErrors = this.handleApiError(
+            err,
+            'Error updating task'
+          );
 
-    this.taskService.updateTask(task.id, { title, description }).subscribe({
-      next: () => {
-        this.displayMessage('Task updated successfully!', 'success');
-      },
-      error: () =>
-        this.displayMessage('Error updating task, try again later.', 'error'),
-    });
+          if (validationErrors) {
+            if (
+              validationErrors.Title &&
+              this.isRequiredError(validationErrors.Title)
+            ) {
+              task.title = oldState.title;
+            }
+            if (
+              validationErrors.Description &&
+              this.isRequiredError(validationErrors.Description)
+            ) {
+              task.description = oldState.description;
+            }
+          }
+        },
+      });
   }
 
   // Modal
@@ -114,7 +174,7 @@ export class TaskDashboardComponent implements OnInit {
   displayMessage(msg: string, type: 'success' | 'error' | ''): void {
     this.message = msg;
     this.messageType = type;
-    timer(3000).subscribe(() => {
+    timer(4000).subscribe(() => {
       this.message = '';
       this.messageType = '';
     });
@@ -133,10 +193,12 @@ export class TaskDashboardComponent implements OnInit {
       next: (createdTask: Task) => {
         this.tasks.push(createdTask);
         this.displayMessage('Task created successfully!', 'success');
+        if (this.createCardComponent) {
+          this.createCardComponent.clearFields();
+        }
       },
-      error: (error: HttpErrorResponse) => {
-        this.displayMessage(`Error creating task: Verify your input.`, 'error');
-      },
+      error: (err: HttpErrorResponse) =>
+        this.handleApiError(err, 'Error creating task'),
     });
   }
 }
