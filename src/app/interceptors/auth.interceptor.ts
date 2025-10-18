@@ -58,10 +58,6 @@ export class AuthInterceptor implements HttpInterceptor {
       }
 
       return this.authService.refreshToken().pipe(
-        switchMap((newToken: string) => {
-          this.isRefreshing = false;
-          return next.handle(this.addToken(request, newToken));
-        }),
         catchError((err) => {
           this.isRefreshing = false;
           const currentRoute = this.router.url.split('?')[0];
@@ -71,6 +67,10 @@ export class AuthInterceptor implements HttpInterceptor {
             this.router.navigate(['/login']);
           }
           return throwError(() => err);
+        }),
+        switchMap((newToken: string) => {
+          this.isRefreshing = false;
+          return next.handle(this.addToken(request, newToken));
         })
       );
     }
